@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+    <div class="profile text-center my-5">
+        <h1>Hello <span class='text-danger'>{{user}}!</span> Welcome to the Profile</h1>
+        <div class="change my-4">
+            <a class='btn btn-primary me-2' href="{%url 'change_password_by_old_password' %}">Change Password (required old password)</a>
+            <a class='btn btn-warning me-2' href="{% url 'change_password_without_old_password' %}">Change Password</a>
+            <a class='btn btn-success me-2' href="{% url 'update_user_data' %}">Update Profile</a>
+        </div>
+    </div>
+{%endblock%}
