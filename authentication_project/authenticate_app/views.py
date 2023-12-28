@@ -4,6 +4,8 @@ from authenticate_app.forms import SignUPForm, UpdateUserData
 from django.contrib.auth import login, logout, update_session_auth_hash,authenticate
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,SetPasswordForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def user_signup(request):
@@ -18,6 +20,7 @@ def user_signup(request):
     return render(request,'data_change_form.html', {'form':signup_form, 'type':'Signup'})
 
 
+@login_required(login_url="/authentication/user_login/")
 def profile(request):
     return render(request,'profile.html')
 
@@ -39,7 +42,7 @@ def user_login(request):
     return render(request,'data_change_form.html', {'form':login_form, 'type':'Login'})
 
 
-
+@login_required(login_url="/authentication/user_login/")
 def user_logout(request):
     logout(request)
     messages.success(request, "Loged out successfully")
@@ -47,6 +50,7 @@ def user_logout(request):
 
 
 
+@login_required(login_url="/authentication/user_login/")
 def change_password_by_old_password(request):
     if request.method == 'POST':
         change_pass_form = PasswordChangeForm(user= request.user, data = request.POST)
@@ -61,6 +65,7 @@ def change_password_by_old_password(request):
 
 
 
+@login_required(login_url="/authentication/user_login/")
 def change_password_without_old_password(request):
     if request.method == 'POST':
         change_pass_form = SetPasswordForm(user= request.user, data = request.POST)
@@ -75,7 +80,7 @@ def change_password_without_old_password(request):
 
 
 
-
+@login_required(login_url="/authentication/user_login/")
 def update_user_data(request):
     if request.method == 'POST':
         update_data_form = UpdateUserData(request.POST, instance=request.user)
